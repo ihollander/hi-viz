@@ -1,6 +1,6 @@
 {
-  "name": "hi-viz",
-  "version": "1.0.0",
+  "name": "@ihollander/hi-viz",
+  "version": "0.1.0",
   "description": "Made with create-react-library",
   "author": "ihollander",
   "license": "MIT",
@@ -49,5 +49,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "styled-components": "^5.2.1"
+  }
 }
