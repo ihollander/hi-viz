@@ -1,28 +1,29 @@
 # hi-viz
 
-> Made with create-react-library
+> A React component hierarchy visualizer
 
 [![NPM](https://img.shields.io/npm/v/hi-viz.svg)](https://www.npmjs.com/package/hi-viz) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save hi-viz
+npm install hi-viz
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import HiViz from '@ihollander/hi-viz'
+import App from './components/App'
 
-import MyComponent from 'hi-viz'
-import 'hi-viz/dist/index.css'
-
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
+ReactDOM.render(
+  <HiViz>
+    <App />
+  </HiViz>,
+  document.getElementById('root')
+)
 ```
 
 ## License

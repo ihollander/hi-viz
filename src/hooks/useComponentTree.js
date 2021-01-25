@@ -11,6 +11,26 @@ function getStartingRootNode() {
   }
 }
 
+// push hooks into arrays for easier rendering
+function parseHooks(node) {
+  const stateHooks = []
+  const effectHooks = []
+  if (node.memoizedState) {
+    let hook = node.memoizedState
+    while (hook) {
+      if ('baseState' in hook) {
+        stateHooks.push(hook.baseState)
+      } else if (hook.memoizedState) {
+        if (hook.memoizedState.create) {
+          effectHooks.push(hook.memoizedState.create.toString())
+        }
+      }
+      hook = hook.next
+    }
+  }
+  return { stateHooks, effectHooks }
+}
+
 // traverse the React fiber tree to get components
 function getChildren(node) {
   const nodes = [node.child]
@@ -27,6 +47,7 @@ function getChildren(node) {
         if (node.tag === 0 || node.tag === 1) {
           children.push({
             node,
+            hooks: parseHooks(node),
             children: getChildren(node)
           })
         } else {
@@ -41,18 +62,42 @@ function getChildren(node) {
   return children
 }
 
+function findByKey(root, key) {
+  const nodes = [root.child]
+  while (nodes.length > 0) {
+    const node = nodes.shift()
+    if (node) {
+      if (node.key === key) return node
+      nodes.push(node.child)
+      nodes.push(node.sibling)
+    }
+  }
+}
+
+const POLL_INTERVAL = 1000
+
 // hook
-function useComponentTree(showTree) {
+function useComponentTree(childRootKey, showTree) {
   const [componentTree, setComponentTree] = useState([])
   const rootRef = useRef(getStartingRootNode())
 
   useEffect(() => {
     if (rootRef.current && showTree) {
       const root = rootRef.current._reactRootContainer._internalRoot.current
-      const componentTree = getChildren(root)
-      setComponentTree(componentTree)
+      const childRoot = findByKey(root, childRootKey)
+
+      const poll = () => {
+        const componentTree = getChildren(childRoot)
+        setComponentTree(componentTree)
+      }
+
+      const interval = setInterval(poll, POLL_INTERVAL)
+
+      return () => {
+        clearInterval(interval)
+      }
     }
-  }, [rootRef, showTree])
+  }, [rootRef, childRootKey, showTree])
 
   return componentTree
 }
