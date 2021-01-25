@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import stringify from 'json-stringify-safe'
 
 const Node = styled.li`
   margin: 0;
@@ -88,7 +89,7 @@ function Tree({
           {showProps ? (
             <Box>
               <pre>
-                <code>Props: {JSON.stringify(node.pendingProps, null, 2)}</code>
+                <code>Props: {stringify(node.pendingProps, null, 2)}</code>
               </pre>
             </Box>
           ) : null}
@@ -98,7 +99,7 @@ function Tree({
               <React.Fragment>
                 {hooks.stateHooks.map((hook, i) => (
                   <pre key={i}>
-                    <code>useState: {JSON.stringify(hook, null, 2)}</code>
+                    <code>useState: {stringify(hook, null, 2)}</code>
                   </pre>
                 ))}
                 {hooks.effectHooks.map((hook, i) => (
@@ -111,9 +112,7 @@ function Tree({
             {showState && node.stateNode ? (
               <React.Fragment>
                 <pre>
-                  <code>
-                    State: {JSON.stringify(node.stateNode.state, null, 2)}
-                  </code>
+                  <code>State: {stringify(node.stateNode.state, null, 2)}</code>
                 </pre>
                 {hooks.effectHooks.map((hook, i) => (
                   <pre key={i}>

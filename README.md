@@ -2,7 +2,7 @@
 
 > A React component hierarchy visualizer
 
-[![NPM](https://img.shields.io/npm/v/hi-viz.svg)](https://www.npmjs.com/package/hi-viz) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@ihollander/hi-viz.svg)](https://www.npmjs.com/package/@ihollander/hi-viz) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
